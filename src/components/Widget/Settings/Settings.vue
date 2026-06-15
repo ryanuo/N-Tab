@@ -37,6 +37,7 @@ const isConfirmVisible = ref(false)
 // 示例：重置所有设置（比如在重置按钮点击事件里调用）
 function handleResetAll() {
   resetAllOptions()
+  isConfirmVisible.value = false
 }
 
 const { currentDateTime } = useDateTime()
