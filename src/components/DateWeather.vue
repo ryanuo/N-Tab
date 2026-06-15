@@ -42,26 +42,15 @@ const weatherIframe = computed(() => {
 
 <template>
   <div class="time">
-    <p
-      class="text-[4em] text-white"
-      @click.stop="handleDateFocus"
-    >
+    <p class="text-[4em] text-white" @click.stop="handleDateFocus">
       {{ currentDateTime }}
     </p>
-    <p
-      v-if="timeStore.showDateWeek"
-      class="text-[1.2em] text-white"
-    >
+    <p v-if="timeStore.showDateWeek" class="text-[1.2em] text-white">
       {{ currentDateWeek }}
     </p>
     <iframe
-      scrolling="no"
-      :src="weatherIframe"
-      frameborder="0"
-      width="240"
-      height="28"
-      class="mt-2 rounded"
-      allowtransparency="true"
+      v-if="weatherStore.showWeather" scrolling="no" :src="weatherIframe" frameborder="0" width="240" height="28"
+      class="mt-2 rounded" allowtransparency="true"
     />
   </div>
 </template>
