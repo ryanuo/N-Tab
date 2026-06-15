@@ -78,16 +78,13 @@ function resetSettings() {
 function tabClass(tabName: string) {
   return `w-full px-6 py-3 text-left transition-all duration-200 rounded-r-2 ${activeTab.value === tabName
     ? 'border-l-4 border-[--c-500] bg-[--c-50] dark:bg-[#23272f] text-[--c-600] dark:text-[--c-400] font-medium'
-    : 'text-color font-medium hover:bg-[--c-15-a]'
+    : 'border-none text-color font-medium hover:bg-[--c-15-a]'
   }`
 }
 </script>
 
 <template>
-  <div
-    class="text-color relative max-w-3xl w-full rounded-lg"
-    @click.stop
-  >
+  <div class="text-color relative max-w-3xl w-full rounded-lg" @click.stop>
     <div class="flex items-center justify-between p-4">
       <h2 class="text-xl font-bold">
         {{ t('settings.title') }}
@@ -154,16 +151,12 @@ function tabClass(tabName: string) {
               <span class="text-color">{{ t('settings.color.label') }}</span>
               <div class="flex cursor-pointer items-center gap-1">
                 <div
-                  v-for="(color, index) in colors" :key="index"
-                  disabled
-                  :style="{ backgroundColor: color }" class="h-4 w-4 cursor-pointer"
-                  hover="scale-105"
-                  :class="{
+                  v-for="(color, index) in colors" :key="index" disabled :style="{ backgroundColor: color }"
+                  class="h-4 w-4 cursor-pointer" hover="scale-105" :class="{
                     'scale-115': color === colorTheme,
                     'opacity-50': color !== colorTheme,
                     'border-1 border-[--c-100]': color === colorTheme,
-                  }"
-                  @click="colorTheme = color"
+                  }" @click="colorTheme = color"
                 />
               </div>
             </ItemContainer>
@@ -429,12 +422,15 @@ a {
 .border-base-r {
   @apply border-r-0.1 border-[#9f9f9e];
 }
+
 .border-base-b {
   @apply border-b-0.1 border-[#9f9f9e];
 }
+
 .border-base-l {
   @apply border-l-0.1 border-[#9f9f9e];
 }
+
 .border-base-t {
   @apply border-t-0.1 border-[#9f9f9e];
 }
