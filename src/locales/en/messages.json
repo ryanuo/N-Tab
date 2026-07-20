@@ -10,6 +10,7 @@
   "settings.tab.dock": "Dock",
   "settings.tab.about": "About",
   "settings.dock": "Dock Settings",
+  "dock.dragTip": "Drag left icon to reorder",
   "dock.add": "Add Item",
   "dock.edit.name": "Name",
   "dock.edit.link": "Link",

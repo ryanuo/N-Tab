@@ -10,6 +10,7 @@
   "settings.tab.dock": "Dock 栏",
   "settings.tab.about": "关于",
   "settings.dock": "Dock 栏设置",
+  "dock.dragTip": "拖拽左侧图标可调整顺序",
   "dock.add": "添加项目",
   "dock.edit.name": "名称",
   "dock.edit.link": "链接",

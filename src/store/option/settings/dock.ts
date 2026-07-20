@@ -38,11 +38,16 @@ export const useDockStore = defineStore('dock', () => {
     dockingData.value = [...defaultDockingData]
   }
 
+  function reorder(items: DockingItem[]) {
+    dockingData.value = items
+  }
+
   return {
     dockingData,
     addItem,
     removeItem,
     updateItem,
+    reorder,
     reset,
   }
 })

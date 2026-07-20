@@ -76,6 +76,12 @@ function handleFileChange(e: Event) {
   }
 }
 
+const systemItems = ['all', 'camera', 'cover', 'settings', 'theme']
+
+function isSystemItem(id: DockingID): boolean {
+  return systemItems.includes(id)
+}
+
 function onDragStart(index: number) {
   dragIndex.value = index
 }
@@ -90,12 +96,13 @@ function onDragLeave() {
 }
 
 function onDrop(index: number) {
-  if (dragIndex.value === null || dragIndex.value === index)
+  if (dragIndex.value === null || dragIndex.value === index) {
     return
+  }
   const items = [...dockingData.value]
   const [dragged] = items.splice(dragIndex.value, 1)
   items.splice(index, 0, dragged)
-  dockingData.value = items
+  dockStore.reorder(items)
   dragIndex.value = null
   dragOverIndex.value = null
 }
@@ -108,6 +115,12 @@ function onDragEnd() {
 
 <template>
   <div class="dock-setting">
+    <!-- 提示 -->
+    <div class="mb-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+      <span class="i-system-uicons-move" />
+      <span>{{ t('dock.dragTip') }}</span>
+    </div>
+
     <!-- 列表 -->
     <div class="mb-4 space-y-2">
       <div
@@ -123,7 +136,10 @@ function onDragEnd() {
         @dragend="onDragEnd"
       >
         <!-- 拖拽把手 -->
-        <div class="cursor-grab text-gray-400">
+        <div
+          class="cursor-grab text-gray-400"
+          :class="{ 'opacity-0 pointer-events-none': isSystemItem(item.id) }"
+        >
           <span class="i-system-uicons-grids" />
         </div>
 
@@ -158,6 +174,7 @@ function onDragEnd() {
             <span class="i-carbon-edit" />
           </button>
           <button
+            v-if="!isSystemItem(item.id)"
             class="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-red-100 hover:text-red-500"
             @click="removeItem(item.id)"
           >
