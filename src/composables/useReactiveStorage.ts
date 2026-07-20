@@ -10,10 +10,10 @@ export function useReactiveStorage<T>(
     return useWebExtensionStorage(key, initialValue) as { data: RemovableRef<T>, dataReady: Promise<T> }
   }
   else {
-    const data = useStorageAsync(key, initialValue) as unknown as { data: RemovableRef<T>, dataReady: Promise<T> }
+    const data = useStorageAsync(key, initialValue) as RemovableRef<T>
     return {
-      data: toRef(data) as RemovableRef<T>,
-      dataReady: data.dataReady,
+      data,
+      dataReady: Promise.resolve(data.value),
     }
   }
 }

@@ -47,13 +47,10 @@ export function useDateTime() {
     timer = setInterval(updateDateTime, 1000) as unknown as number
   })
 
-  // 使用 watch 监听 settings.timezone 变化
   watch(
     () => timeStore.timezone,
-    (newTimeZone) => {
-      if (newTimeZone) {
-        dayjs.tz.setDefault(newTimeZone)
-      }
+    () => {
+      updateDateTime()
     },
     { immediate: true },
   )

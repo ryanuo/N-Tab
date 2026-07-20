@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
 import { useMarkStore } from '~/store/option/mark'
-import { usePreferenceStore } from '~/store/option/settings'
+import { usePreferenceStore, useThemeStore } from '~/store/option/settings'
 
 const markStore = useMarkStore()
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const themeStore = useThemeStore()
+const isDark = computed(() => themeStore.theme === 'dark')
+function toggleDark() {
+  themeStore.setTheme(themeStore.theme === 'dark' ? 'light' : 'dark')
+}
 const dockingId = ref<DockingID>('all')
 const preferenceStore = usePreferenceStore()
 
