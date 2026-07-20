@@ -8,15 +8,24 @@ export const useCoverStore = defineStore('cover', () => {
   const { data: coverMethod } = useReactiveStorage<'custom' | 'origin'>('coverMethod', 'origin')
   const { data: coverType } = useReactiveStorage<'image' | 'video'>('coverType', 'image')
   const { data: coverCustomKey } = useReactiveStorage<string>('coverCustomKey', '')
+  let objectUrl: string | null = null
 
   const applyCover = () => {
     if (coverMethod.value === 'custom' && coverCustomKey.value) {
       fileStorage.getFile(coverCustomKey.value).then((file: any) => {
-        if (file)
-          cover.value = URL.createObjectURL(file.data)
+        if (file) {
+          if (objectUrl)
+            URL.revokeObjectURL(objectUrl)
+          objectUrl = URL.createObjectURL(file.data)
+          cover.value = objectUrl
+        }
       })
     }
     else {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl)
+        objectUrl = null
+      }
       coverCustomKey.value = ''
     }
   }

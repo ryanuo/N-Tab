@@ -107,13 +107,16 @@ function computedItemClass(index: number) {
 }
 
 // 高亮匹配的文本
+function escapeRegExp(text: string) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function highlightMatch(text: string) {
   if (!searchQuery.value.trim())
     return text
 
-  const query = searchQuery.value.toLowerCase().trim()
+  const query = escapeRegExp(searchQuery.value.toLowerCase().trim())
   const regex = new RegExp(`(${query})`, 'gi')
-
   return text.replace(regex, '<span class="font-semibold text-[--c-600]">$1</span>')
 }
 

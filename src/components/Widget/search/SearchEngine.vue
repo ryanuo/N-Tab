@@ -33,24 +33,22 @@ function onAltPress(event: KeyboardEvent, key: number) {
   handleSelectEngine(selectedEngine)
 }
 
+const handlers: Array<(event: KeyboardEvent) => void> = []
+
 onMounted(() => {
-  // 动态生成 Alt+1 到 Alt+n 的快捷键
   engines.value.forEach((_, index) => {
     const key = index + 1
-    const shortcut = `alt+${key}, option+${key}` // 同时支持 Alt 和 Option 键
-    hotkeys(shortcut, (event) => {
-      onAltPress(event, key)
-    })
+    const shortcut = `alt+${key}, option+${key}`
+    const handler = (event: KeyboardEvent) => onAltPress(event, key)
+    handlers.push(handler)
+    hotkeys(shortcut, handler)
   })
 })
 
 // 卸载时移除快捷键
 onUnmounted(() => {
-  // 仅移除当前组件绑定的快捷键
   engines.value.forEach((_, index) => {
-    hotkeys.unbind(`alt+${index + 1}, option+${index + 1}`, (event) => {
-      onAltPress(event, index + 1)
-    })
+    hotkeys.unbind(`alt+${index + 1}, option+${index + 1}`, handlers[index])
   })
 })
 </script>
