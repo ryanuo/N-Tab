@@ -43,8 +43,11 @@ interface DockingItem {
   id: DockingID
   name: string
   icon: string
+  iconUrl?: string
+  iconKey?: string
   link?: string
   class?: string
+  target?: '_self' | '_blank'
 }
 type ColorTheme = 'green' | 'red' | 'purple' | 'yellow' | 'pink' | 'blue' | 'orange'
 interface ConsoleItem {

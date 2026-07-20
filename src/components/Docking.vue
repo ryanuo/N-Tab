@@ -1,49 +1,49 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useMarkStore } from '~/store/option/mark'
 import { usePreferenceStore, useThemeStore } from '~/store/option/settings'
+import { useDockStore } from '~/store/option/settings/dock'
+import { getDockIconUrl } from '~/composables/useDefaultAvatar'
+import { fileStorage } from '~/composables/indexedDB'
 
 const markStore = useMarkStore()
 const themeStore = useThemeStore()
-const isDark = computed(() => themeStore.theme === 'dark')
+const dockStore = useDockStore()
+const { dockingData } = storeToRefs(dockStore)
 function toggleDark() {
   themeStore.setTheme(themeStore.theme === 'dark' ? 'light' : 'dark')
 }
 const dockingId = ref<DockingID>('all')
 const preferenceStore = usePreferenceStore()
 
+function openLink(item: DockingItem) {
+  if (!item.link)
+    return
+  if (item.target === '_self') {
+    window.location.href = item.link
+  }
+  else {
+    window.open(item.link, '_blank')
+  }
+}
+
 function handleIconClick(item: DockingItem) {
   const { id: idx, link } = item
   if (['all', 'camera', 'cover', 'settings'].includes(idx)) {
     markStore.setShowWidget(true)
     dockingId.value = idx
+    return
   }
 
   if (idx === 'theme') {
     toggleDark()
+    return
   }
 
   if (link) {
-    window.open(link, '_blank')
+    openLink(item)
   }
 }
-
-const dockingData = computed<DockingItem[]>(() => {
-  const themeIcon = !isDark.value ? 'i-twemoji:sun' : 'i-twemoji:first-quarter-moon-face'
-  return [
-    { id: 'all', name: '所有', icon: 'i-skill-icons-ros-light' },
-    { id: 'ai', name: 'AI助手', icon: 'i-simple-icons-openai', link: 'https://chat.openai.com/' },
-    { id: 'translate', name: '翻译', icon: 'i-ic-sharp-translate', link: 'https://www.bing.com/translator', class: 'text-[#66757f]' },
-    { id: 'music', name: '音乐', icon: 'i-twemoji:musical-note', link: 'https://music.163.com/' },
-    { id: 'camera', name: '照片', icon: 'i-twemoji:camera' },
-    { id: 'video', name: '视频', icon: 'i-icon-park:video-one', link: 'https://www.bilibili.com/' },
-    { id: 'note', name: '笔记', icon: 'i-twemoji:spiral-notepad', link: 'https://www.yuque.com/' },
-    { id: 'cover', name: '壁纸设置', icon: 'i-icon-park-pic' },
-    { id: 'mail', name: '邮件', icon: 'i-logos:mailchimp-freddie', link: 'https://mail.aliyun.com/' },
-    { id: 'github', name: 'Github', icon: 'i-skill-icons:github-dark', link: 'https://github.com/ryanuo/tab-ext' },
-    { id: 'settings', name: '设置', icon: 'i-twemoji:gear' },
-    { id: 'theme', name: '主题', icon: themeIcon },
-  ]
-})
 
 defineExpose({
   handleIconClick,
@@ -54,17 +54,65 @@ watchEffect(() => {
     dockingId.value = 'all'
   }
 })
+
+async function getIconUrl(item: DockingItem): Promise<string> {
+  if (item.iconUrl)
+    return item.iconUrl
+  if (item.iconKey) {
+    const file = await fileStorage.getFile(item.iconKey) as any
+    if (file?.data)
+      return URL.createObjectURL(file.data)
+  }
+  if (item.icon)
+    return ''
+  return getDockIconUrl(item.name, item.link)
+}
+
+const iconUrls = ref<Record<string, string>>({})
+
+async function loadIcons() {
+  const urls: Record<string, string> = {}
+  for (const item of dockingData.value) {
+    urls[item.id] = await getIconUrl(item)
+  }
+  iconUrls.value = urls
+}
+
+watch(dockingData, loadIcons, { deep: true })
+onMounted(loadIcons)
+
+onUnmounted(() => {
+  for (const url of Object.values(iconUrls.value)) {
+    if (url.startsWith('blob:'))
+      URL.revokeObjectURL(url)
+  }
+})
 </script>
 
 <template>
   <div v-if="preferenceStore.showDocking" class="docking">
     <div
-      v-for="(item, index) in dockingData" :key="index"
+      v-for="item in dockingData"
+      :key="item.id"
       class="icon h-10 w-10 flex cursor-pointer items-center justify-center rounded-xl bg-white/80 shadow transition-all duration-200 dark:bg-black/60 hover:bg-white hover:scale-105! dark:hover:bg-black/80"
       :class="item.class"
       @click.stop="handleIconClick(item)"
     >
-      <span class="m-2 text-2xl" :class="item.icon" />
+      <img
+        v-if="iconUrls[item.id] && !item.icon"
+        :src="iconUrls[item.id]"
+        class="m-2 h-5 w-5"
+        alt=""
+      >
+      <span
+        v-else-if="item.icon"
+        class="m-2 text-2xl"
+        :class="item.icon"
+      />
+      <span
+        v-else
+        class="m-2 text-2xl text-gray-400"
+      >?</span>
     </div>
   </div>
   <Widget :show="markStore.isShowWidget" :idx="dockingId" />

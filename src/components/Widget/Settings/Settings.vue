@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import ItemContainer from './ItemContainer.vue'
+import DockSetting from './DockSetting.vue'
 import { resetAllOptions } from '~/store/option/settings'
 import { useDateTime } from '~/composables/useDateTime'
 import { colors } from '~/constants/settings'
@@ -28,7 +29,7 @@ const markStore = useMarkStore()
 
 const { t } = useI18n()
 
-type ActiveTab = 'base' | 'city' | 'weather' | 'notification' | 'about' | 'search' | 'preference' | 'timeWeather'
+type ActiveTab = 'base' | 'city' | 'weather' | 'notification' | 'about' | 'search' | 'preference' | 'timeWeather' | 'dock'
 const appVersion = __APP_VERSION__
 const buildTime = __BUILD_TIME__
 const activeTab = ref<ActiveTab>('base') // 默认激活基础配置
@@ -113,6 +114,11 @@ function tabClass(tabName: string) {
         <!-- 时间与天气 -->
         <button :class="tabClass('timeWeather')" @click="activeTab = 'timeWeather'">
           {{ t('settings.tab.timeWeather') }}
+        </button>
+
+        <!-- Dock 栏 -->
+        <button :class="tabClass('dock')" @click="activeTab = 'dock'">
+          {{ t('settings.tab.dock') }}
         </button>
 
         <!-- 关于 -->
@@ -297,6 +303,18 @@ function tabClass(tabName: string) {
             <ItemContainer v-if="showWeather && weatherTheme === '2'">
               <span class="text-color">{{ t('settings.weatherCity') }}</span>
               <CityCascader v-model="weatherCity" />
+            </ItemContainer>
+          </GroupContainer>
+        </div>
+
+        <!-- Dock 栏设置 -->
+        <div v-show="activeTab === 'dock'">
+          <GroupContainer>
+            <template #label>
+              {{ t('settings.dock') }}
+            </template>
+            <ItemContainer classname="flex-col">
+              <DockSetting />
             </ItemContainer>
           </GroupContainer>
         </div>
