@@ -39,9 +39,6 @@ async function fetchSuggestions() {
       `https://suggestion.baidu.com/su?wd=${encodeURIComponent(query)}&json=1&p=3`,
       {
         signal: controller.signal,
-        headers: {
-          Referer: 'https://www.baidu.com',
-        },
       },
     )
 
@@ -106,18 +103,41 @@ function computedItemClass(index: number) {
   return 'transition-all duration-200'
 }
 
-// 高亮匹配的文本
+// 高亮匹配的文本 — 返回分段数组避免 v-html XSS
+interface TextSegment {
+  text: string
+  highlight: boolean
+}
+
 function escapeRegExp(text: string) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function highlightMatch(text: string) {
+function splitHighlight(text: string): TextSegment[] {
   if (!searchQuery.value.trim())
-    return text
+    return [{ text, highlight: false }]
 
   const query = escapeRegExp(searchQuery.value.toLowerCase().trim())
   const regex = new RegExp(`(${query})`, 'gi')
-  return text.replace(regex, '<span class="font-semibold text-[--c-600]">$1</span>')
+  const segments: TextSegment[] = []
+  let lastIndex = 0
+
+  while (true) {
+    const match = regex.exec(text)
+    if (match === null)
+      break
+
+    if (match.index > lastIndex)
+      segments.push({ text: text.slice(lastIndex, match.index), highlight: false })
+
+    segments.push({ text: match[0], highlight: true })
+    lastIndex = match.index + match[0].length
+  }
+
+  if (lastIndex < text.length)
+    segments.push({ text: text.slice(lastIndex), highlight: false })
+
+  return segments
 }
 
 function resetIndex() {
@@ -186,7 +206,13 @@ onUnmounted (() => {
           @click.stop="submit(suggestion)"
           @mouseenter="hoveredIndex = index"
         >
-          <span v-html="highlightMatch(suggestion)" />
+          <span>
+            <span
+              v-for="(seg, sIndex) in splitHighlight(suggestion)"
+              :key="sIndex"
+              :class="seg.highlight ? 'font-semibold text-[--c-600]' : ''"
+            >{{ seg.text }}</span>
+          </span>
           <span v-if="hoveredIndex === index" class="i-fluent-arrow-enter-left-20-regular" />
         </li>
       </ul>

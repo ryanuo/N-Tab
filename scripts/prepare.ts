@@ -26,7 +26,15 @@ function writeManifest() {
   execSync('npx esno ./scripts/manifest.ts', { stdio: 'inherit' })
 }
 
+function copyStaticAssets() {
+  fs.copySync(r('src/assets/icons'), r('extension/assets/icons'))
+  fs.copySync(r('src/assets/icon-512.png'), r('extension/assets/icon-512.png'))
+  fs.copySync(r('src/assets/logo.png'), r('extension/assets/logo.png'))
+  log('PRE', 'copied static assets')
+}
+
 writeManifest()
+copyStaticAssets()
 
 if (isDev) {
   stubIndexHtml()
