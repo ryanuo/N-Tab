@@ -39,10 +39,9 @@ export async function getManifest() {
     //   128: './assets/icons/icon-128.png',
     // },
     permissions: [
-      'tabs',
       'search',
       'storage',
-      // 'sidePanel',
+      // 'tabs', // 模板遗留的标签页跟踪已移除；如未来需要再按需申请
     ],
     host_permissions: [
       'https://faviconsnap.com/*',

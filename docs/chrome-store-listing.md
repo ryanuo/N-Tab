@@ -68,5 +68,5 @@ Feedback: questions and feature suggestions are welcome via the developer links 
 - [ ] 名称、开发者名称无无关关键词
 - [ ] manifest 无 `chrome_settings_overrides`（不修改默认搜索服务提供商）
 - [ ] manifest 无第三方搜索联想的 host 权限（如 suggestion.baidu.com）
-- [ ] 权限最小：`tabs` / `search` / `storage` + 壁纸、图标、天气所需 host 权限
+- [ ] 权限最小：`search` / `storage` + 壁纸、图标、天气所需 host 权限（`tabs` 权限及其模板遗留的标签页跟踪代码已移除）
 - [ ] 新标签页搜索提交走 `chrome.search.query`（见 `src/store/option/search.ts`）

@@ -1,6 +1,6 @@
 # Privacy Policy for N-Tab
 
-**Last updated:** September 2026
+**Last updated:** November 2026
 
 ## Overview
 
@@ -12,7 +12,6 @@ The extension stores the following preferences **locally in your browser** using
 
 - Theme mode (light/dark/auto)
 - Wallpaper settings (custom image/video or random)
-- Search engine preferences and ordering
 - Dock bar custom items (names, links, icons)
 - Time/timezone settings
 - Weather city location
@@ -20,9 +19,8 @@ The extension stores the following preferences **locally in your browser** using
 
 ## How We Use Information
 
-- **Tabs permission**: We monitor tab switching to pass the previous tab's title to the extension's content script. This data stays within your browser and is never sent externally.
+- **Search permission**: Used to submit your search query to your browser's default search engine via the `chrome.search` API. The extension never redirects searches or changes your default search engine.
 - **Host permissions**: We make API requests to third-party services to provide core features:
-  - `suggestion.baidu.com` — search suggestions
   - `faviconsnap.com` — website icon fetching
   - `wp.upx8.com` — random wallpaper images
   - `tianqiapi.com` / `i.tianqi.com` — weather data
@@ -31,7 +29,6 @@ The extension stores the following preferences **locally in your browser** using
 
 The extension sends requests to the third-party services listed above. Each service has its own privacy policy governing the data they receive:
 
-- Baidu Suggestion API
 - Faviconsnap API
 - Tianqi Weather API
 
@@ -47,7 +44,7 @@ We do **not** collect, store, or transmit:
 - Authentication credentials
 - Personal communications
 - Precise geolocation
-- Browsing history beyond the current tab title
+- Browsing history
 - User activity (keystrokes, clicks, scrolls)
 - Website content
 
