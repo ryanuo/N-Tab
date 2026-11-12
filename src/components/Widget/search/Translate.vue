@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import hotkeys from 'hotkeys-js'
 import { storeToRefs } from 'pinia'
-import { useI18n } from 'vue-i18n'
+import { TRANSLATE_URL } from '~/constants/common'
 import { useSearchStore } from '~/store/option/search'
 
 const searchStore = useSearchStore()
-const { t } = useI18n()
-const { searchEngine, searchQuery } = storeToRefs(searchStore)
+const { searchQuery } = storeToRefs(searchStore)
 
 function clickTranslate() {
-  if (searchQuery.value && searchEngine.value.translateUrl) {
-    window.open(searchEngine.value.translateUrl + searchQuery.value, '_blank')
-  }
+  if (searchQuery.value.trim())
+    window.open(TRANSLATE_URL + encodeURIComponent(searchQuery.value.trim()), '_blank')
 }
 
 onMounted(() => {
@@ -24,17 +22,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <li
-    v-if="searchEngine.translateUrl"
-    class="flex cursor-pointer items-center justify-between px-4 py-2 transition-colors hover:bg-gray-100/40 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-100"
-    @click.stop="clickTranslate"
-  >
-    <div class="flex items-center">
-      <span class="i-icon-park-outline-translate" />
-      <span>{{ t('translate.quick') }}：{{ searchQuery }}</span>
-    </div>
-    <div class="flex items-center">
-      <span class="i-ci-option mr-1" /> Enter
-    </div>
-  </li>
+  <div class="h-full w-full flex items-center justify-center" :title="$t('translate.quick')" @click.stop="clickTranslate">
+    <span class="i-icon-park-outline-translate h-5 w-5" />
+  </div>
 </template>

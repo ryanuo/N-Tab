@@ -1,10 +1,10 @@
 {
   "name": "vitesse-webext",
   "displayName": "N-Tab",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "private": true,
   "packageManager": "pnpm@10.11.1",
-  "description": "N-Tab 是一个轻量级浏览器标签页扩展，主要功能包括时间显示、搜索建议、搜索引擎切换、快捷翻译、主题配置等。",
+  "description": "N-Tab 是一个轻量级的新标签页扩展：搜索框遵循浏览器默认搜索引擎，提供时间天气、快捷导航、快捷翻译与个性化主题壁纸。",
   "scripts": {
     "dev": "npm run clear && cross-env NODE_ENV=development run-p dev:*",
     "dev-firefox": "npm run clear && cross-env NODE_ENV=development EXTENSION=firefox run-p dev:*",

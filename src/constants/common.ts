@@ -107,3 +107,6 @@ export const consolesMap = consoles.reduce((acc, cur) => {
   acc[cur.tag].push(cur)
   return acc
 }, {} as Record<string, ConsoleItem[]>)
+
+// 快捷翻译跳转地址（搜索框左侧按钮 / Option+Enter 触发）
+export const TRANSLATE_URL = 'https://www.bing.com/translator?fromLang=auto-detect&toLang=zh-Hans&text='

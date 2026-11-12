@@ -15,14 +15,14 @@
 
 ## 🧩 Project Description
 
-- N-Tab is a lightweight browser new tab extension featuring time display, search suggestions, search engine switching, quick translation, theme configuration, and more.
+- N-Tab is a lightweight new tab extension: search via your browser's default search engine, with clock, weather, quick navigation, quick translate, and custom themes.
 
 ## ✨ Features
 
-- Quick translation (Google, Bing, Baidu, etc.)
+- Quick translate
 - Multiple themes (light/dark/auto)
 - Custom wallpaper (supports URL, local image, Base64)
-- Search engine switching and customization
+- Search via the default search engine
 - Personalized preferences (language, animation, etc.)
 - Time and weather display (supports multiple time zones and city selection)
 - Online version available [here](https://tab.ryanuo.cc/)
@@ -73,9 +73,9 @@ yarn build
 
 ## 📝 Usage
 
-- Click the settings button in the upper right corner to open the settings panel for theme, wallpaper, search engine, and other preferences.
+- Click the settings button in the upper right corner to open the settings panel for theme, wallpaper, and other preferences.
 - Supports wallpaper via URL, local image upload, and Base64 image.
-- The search bar supports multiple engines and custom additions.
+- Press Enter to search — results always use your browser's default search engine.
 - Time and weather can be enabled/disabled as needed, with selectable time zone and city.
 
 ## 🤝 Contribution Guide
@@ -111,11 +111,8 @@ For suggestions or questions, please submit an [Issue](https://github.com/ryanuo
 
 | Shortcut           | Description                                                        |
 |--------------------|--------------------------------------------------------------------|
-| `Alt + Number`     | Switch to the corresponding search engine (number = engine index). |
 | `Option + Enter`   | Quick translate the current search box content via translation link.|
-| `Enter`            | Submit the selected suggestion or perform default search.          |
-| `Up Arrow` (↑)     | Navigate up in the suggestion list.                               |
-| `Down Arrow` (↓)   | Navigate down in the suggestion list.                             |
+| `Enter`            | Submit the query and search via the default search engine.          |
 | `Command + H`      | Show or hide the settings panel (toggle console state).           |
 
 ## 📄 License

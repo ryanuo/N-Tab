@@ -11,14 +11,6 @@ declare module '*.vue' {
   export default component
 }
 
-declare interface Engines {
-  name: string
-  url: string
-  icon?: string
-  iconUrl?: string
-  translateUrl?: string
-}
-
 declare interface WeatherCity {
   province: {
     id: number

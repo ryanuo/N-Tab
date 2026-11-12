@@ -40,11 +40,11 @@ export async function getManifest() {
     // },
     permissions: [
       'tabs',
+      'search',
       'storage',
       // 'sidePanel',
     ],
     host_permissions: [
-      'https://suggestion.baidu.com/*',
       'https://faviconsnap.com/*',
       'https://wp.upx8.com/*',
       'https://widget.tianqiapi.com/*',
@@ -60,12 +60,6 @@ export async function getManifest() {
     //     ],
     //   },
     // ],
-    web_accessible_resources: [
-      {
-        resources: ['dist/contentScripts/style.css'],
-        matches: ['<all_urls>'],
-      },
-    ],
     content_security_policy: {
       extension_pages: isDev
         // this is required on dev for Vite script to load

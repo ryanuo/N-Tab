@@ -51,10 +51,6 @@ export function useSettingsModels() {
     weatherTheme: createComputed(() => weatherStore.weatherTheme, weatherStore.setWeatherTheme),
 
     // 偏好
-    searchSuggestionEnabled: createComputed(
-      () => preferenceStore.searchSuggestionEnabled,
-      preferenceStore.setSearchSuggestionEnabled,
-    ),
     isAutoFocusSearchBoxOnPageLoad: createComputed(
       () => preferenceStore.isAutoFocusSearchBoxOnPageLoad,
       preferenceStore.setIsAutoFocusSearchBoxOnPageLoad,

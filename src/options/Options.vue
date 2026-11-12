@@ -6,7 +6,6 @@ import { useMarkStore } from '~/store/option/mark'
 import { useSearchStore } from '~/store/option/search'
 import { usePreferenceStore } from '~/store/option/settings'
 
-const searchEngineRef = ref<{ isShowEngine: Ref<boolean>, setIsShowEngine: (isShow: boolean) => void }>()
 const searchInputRef = ref<HTMLInputElement | null>(null)
 
 const markStore = useMarkStore()
@@ -17,10 +16,6 @@ const preferenceStore = usePreferenceStore()
 
 function handleInputFocus() {
   markStore.setInputActive(true)
-
-  if (searchEngineRef.value?.isShowEngine) {
-    searchEngineRef.value.setIsShowEngine(false)
-  }
 }
 
 function handleInput(e: any) {
@@ -88,13 +83,12 @@ onUnmounted(() => {
         @input="handleInput"
         @click.stop="handleInputFocus"
       >
-      <SearchSuggestions v-if="preferenceStore.searchSuggestionEnabled" />
       <template v-if="markStore.isInputActive">
         <button
           type="button" class="btn btn-toggle"
           @click.stop
         >
-          <SearchEngine ref="searchEngineRef" />
+          <Translate />
         </button>
         <button type="button" class="btn btn-search" @click.stop="submit()">
           <span class="i-eva-search-fill h-5 w-5" />

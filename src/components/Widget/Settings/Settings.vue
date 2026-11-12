@@ -15,7 +15,6 @@ const {
   is24Hour,
   isAutoFocusSearchBoxOnPageLoad,
   language,
-  searchSuggestionEnabled,
   showDateWeek,
   showDocking,
   showSeconds,
@@ -29,7 +28,7 @@ const markStore = useMarkStore()
 
 const { t } = useI18n()
 
-type ActiveTab = 'base' | 'city' | 'weather' | 'notification' | 'about' | 'search' | 'preference' | 'timeWeather' | 'dock'
+type ActiveTab = 'base' | 'city' | 'weather' | 'notification' | 'about' | 'preference' | 'timeWeather' | 'dock'
 const appVersion = __APP_VERSION__
 const buildTime = __BUILD_TIME__
 const activeTab = ref<ActiveTab>('base') // 默认激活基础配置
@@ -99,11 +98,6 @@ function tabClass(tabName: string) {
         <!-- 基础配置 -->
         <button :class="tabClass('base')" @click="activeTab = 'base'">
           {{ t('settings.tab.base') }}
-        </button>
-
-        <!-- 搜索引擎 -->
-        <button :class="tabClass('search')" @click="activeTab = 'search'">
-          {{ t('settings.tab.search') }}
         </button>
 
         <!-- 个性化偏好 -->
@@ -177,19 +171,6 @@ function tabClass(tabName: string) {
           </div>
         </div>
 
-        <!-- 搜索引擎设置 -->
-        <div v-show="activeTab === 'search'">
-          <GroupContainer>
-            <template #label>
-              {{ t('settings.searchEngine') }}
-            </template>
-            <ItemContainer classname="flex-col">
-              <span class="text-color">{{ t('settings.search.sorted') }}</span>
-              <SearchEngineSetting />
-            </ItemContainer>
-          </GroupContainer>
-        </div>
-
         <!-- 个性化偏好 -->
         <div v-show="activeTab === 'preference'">
           <GroupContainer>
@@ -209,10 +190,6 @@ function tabClass(tabName: string) {
                   {{ t('settings.language.en-US') }}
                 </option>
               </select>
-            </ItemContainer>
-            <ItemContainer>
-              <span class="text-color">{{ t('settings.searchSuggestion') }}</span>
-              <Toggle v-model="searchSuggestionEnabled" label="" />
             </ItemContainer>
             <ItemContainer>
               <span class="text-color">{{ t('settings.autoFocusSearchBox') }}</span>
