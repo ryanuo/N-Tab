@@ -8,9 +8,9 @@
 <a href="README.md"><img src="https://img.shields.io/badge/-中文-blue?logo=markdown" alt="中文"></a>
 <span><img src="https://img.shields.io/badge/-English-gray?logo=markdown"></span>
 <a href='https://github.com/ryanuo/tab-ext/releases/latest'><img src="https://img.shields.io/badge/-Zip-black?logo=ziggo" alt="zip"></a>
+<a href="https://chromewebstore.google.com/detail/pmjlfipbhedjaehnfoaljmbdimilbnjm"><img src="https://img.shields.io/badge/-Chrome-green?logo=google-chrome" alt="Chrome"></a>
 <a href="https://addons.mozilla.org/firefox/addon/n-tab/"><img src="https://img.shields.io/badge/-Firefox-orange?logo=firefox" alt="Firefox"></a>
-<!-- <a href="https://chrome.google.com/webstore/detail/n-tab/jgjhjhjhjhjhjhjhjhjhjhjhjh"><img src="https://img.shields.io/badge/-Chrome-green?logo=google-chrome" alt="Chrome"></a>
-<a href="https://microsoftedge.microsoft.com/addons/detail/n-tab/jgjhjhjhjhjhjhjhjhjhjhjhjh"><img src="https://img.shields.io/badge/-Edge-blueviolet?logo=edgeimpulse" alt="Edge"></a> -->
+<!-- <a href="https://microsoftedge.microsoft.com/addons/detail/n-tab/jgjhjhjhjhjhjhjhjhjhjhjhjh"><img src="https://img.shields.io/badge/-Edge-blueviolet?logo=edgeimpulse" alt="Edge"></a> -->
 </p>
 
 ## 🧩 Project Description
